@@ -236,7 +236,9 @@ def build_distribution_figure(final_positions, omega):
 
     theory = r_values**2 * np.exp(-0.5 * omega * r_values**2)
     if np.sum(theory) > 0:
-        theory = theory / np.trapz(theory, r_values)
+        norm = np.trapezoid(theory, r_values)
+        if norm > 0:
+            theory = theory / norm
 
     fig = go.Figure()
     fig.add_trace(
